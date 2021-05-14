@@ -93,15 +93,15 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="ssh保存服务器密码免登录"><a href="#ssh保存服务器密码免登录" class="headerlink" title="ssh保存服务器密码免登录"></a>ssh保存服务器密码免登录</h1><h3 id="生成公私钥"><a href="#生成公私钥" class="headerlink" title="生成公私钥"></a>生成公私钥</h3><p>‘’’<br>ssh-keygen -t rsa<br>‘’’<br>一直enter下保存id_rsa和id_rsa.pub在~/.ssh/目录下</p>
-<h3 id="新建config文件并配置以下信息"><a href="#新建config文件并配置以下信息" class="headerlink" title="新建config文件并配置以下信息"></a>新建config文件并配置以下信息</h3><p>‘’’<br>#AAAAA为服务器主机名<br>Host vultr_cloud<br>#写服务器ip地址<br>HostName xxx.xxx.xxx.xxx<br>#root为登陆用户名<br>User root<br>#主机端口，默认是22<br>Port 22<br>#自己生成的私钥的文件路径<br>IdentityFile C:\Users\ST\.ssh\id_rsa<br>‘’’</p>
-<h3 id="登录到远程服务器在用户目录下新增-ssh-authorized-keys文件并添加id-rsa-pub文件"><a href="#登录到远程服务器在用户目录下新增-ssh-authorized-keys文件并添加id-rsa-pub文件" class="headerlink" title="登录到远程服务器在用户目录下新增.ssh/authorized_keys文件并添加id_rsa.pub文件"></a>登录到远程服务器在用户目录下新增.ssh/authorized_keys文件并添加id_rsa.pub文件</h3><h3 id="修改-etc-ssh-sshd-config文件"><a href="#修改-etc-ssh-sshd-config文件" class="headerlink" title="修改/etc/ssh/sshd_config文件"></a>修改/etc/ssh/sshd_config文件</h3><p>‘’’<br>PubkeyAuthentication yes<br>AuthorizedKeysFile .ssh/authorized_keys<br>‘’’<br>保证上述配置没有被注释，AuthorizedKeysFile为上一步拷贝的公钥文件</p>
-<h3 id="至此本地的ssh就可以实现免密码登录"><a href="#至此本地的ssh就可以实现免密码登录" class="headerlink" title="至此本地的ssh就可以实现免密码登录"></a>至此本地的ssh就可以实现免密码登录</h3><p>‘’’<br>ssh vultr_cloud<br>‘’’<br>直接使用config中配置的host登录</p>
+        <h1 id="ssh保存服务器密码免登录"><a href="#ssh保存服务器密码免登录" class="headerlink" title="ssh保存服务器密码免登录"></a>ssh保存服务器密码免登录</h1><h3 id="生成公私钥"><a href="#生成公私钥" class="headerlink" title="生成公私钥"></a>生成公私钥</h3><p>‘’’shell<br>ssh-keygen -t rsa<br>‘’’<br>一直enter下保存id_rsa和id_rsa.pub在~/.ssh/目录下</p>
+<h3 id="新建config文件并配置以下信息"><a href="#新建config文件并配置以下信息" class="headerlink" title="新建config文件并配置以下信息"></a>新建config文件并配置以下信息</h3><p>‘’’shell<br>#AAAAA为服务器主机名<br>Host vultr_cloud<br>#写服务器ip地址<br>HostName xxx.xxx.xxx.xxx<br>#root为登陆用户名<br>User root<br>#主机端口，默认是22<br>Port 22<br>#自己生成的私钥的文件路径<br>IdentityFile C:\Users\ST\.ssh\id_rsa<br>‘’’</p>
+<h3 id="登录到远程服务器在用户目录下新增-ssh-authorized-keys文件并添加id-rsa-pub文件"><a href="#登录到远程服务器在用户目录下新增-ssh-authorized-keys文件并添加id-rsa-pub文件" class="headerlink" title="登录到远程服务器在用户目录下新增.ssh/authorized_keys文件并添加id_rsa.pub文件"></a>登录到远程服务器在用户目录下新增.ssh/authorized_keys文件并添加id_rsa.pub文件</h3><h3 id="修改-etc-ssh-sshd-config文件"><a href="#修改-etc-ssh-sshd-config文件" class="headerlink" title="修改/etc/ssh/sshd_config文件"></a>修改/etc/ssh/sshd_config文件</h3><p>‘’’shell<br>PubkeyAuthentication yes<br>AuthorizedKeysFile .ssh/authorized_keys<br>‘’’<br>保证上述配置没有被注释，AuthorizedKeysFile为上一步拷贝的公钥文件</p>
+<h3 id="至此本地的ssh就可以实现免密码登录"><a href="#至此本地的ssh就可以实现免密码登录" class="headerlink" title="至此本地的ssh就可以实现免密码登录"></a>至此本地的ssh就可以实现免密码登录</h3><p>‘’’shell<br>ssh vultr_cloud<br>‘’’<br>直接使用config中配置的host登录</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/14/ssh%E4%BF%9D%E5%AD%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%86%E7%A0%81%E5%85%8D%E7%99%BB%E5%BD%95/" data-id="ckoo6cm2l0001jkus86wq3wtj" data-title="ssh保存服务器密码免登录" class="article-share-link">Share</a>
+      <a data-url="https://amsssss.github.io/2021/05/14/ssh%E4%BF%9D%E5%AD%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%86%E7%A0%81%E5%85%8D%E7%99%BB%E5%BD%95/" data-id="ckoo6fzb60003cous3x3lh0su" data-title="ssh保存服务器密码免登录" class="article-share-link">Share</a>
       
       
       
@@ -139,7 +139,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/10/my-first-post/" data-id="ckoo6cm2w0003jkus5u0o9ohj" data-title="my first post" class="article-share-link">Share</a>
+      <a data-url="https://amsssss.github.io/2021/05/10/my-first-post/" data-id="ckoo6fzb10002cous8r7w70fz" data-title="my first post" class="article-share-link">Share</a>
       
       
       
@@ -175,7 +175,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/10/learn-template/" data-id="ckoo6cm2n0002jkus38ou3vkr" data-title="" class="article-share-link">Share</a>
+      <a data-url="https://amsssss.github.io/2021/05/10/learn-template/" data-id="ckoo6fzav0000cous2fblc830" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -226,7 +226,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/10/hello-world/" data-id="ckoo6cm2h0000jkuscp1o4v21" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="https://amsssss.github.io/2021/05/10/hello-world/" data-id="ckoo6fzaz0001cousg0dqdlhy" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
