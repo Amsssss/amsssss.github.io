@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | 学习笔记</title>
+  <title>接口幂等性 | 学习笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -49,10 +49,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-接口幂等性" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/05/10/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-05-10T03:21:16.070Z" itemprop="datePublished">2021-05-10</time>
+    <a href="/2021/08/06/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="article-date">
+  <time class="dt-published" datetime="2021-08-06T01:17:46.000Z" itemprop="datePublished">2021-08-06</time>
 </a>
     
   </div>
@@ -63,7 +63,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Hello World
+      接口幂等性
     </h1>
   
 
@@ -71,24 +71,42 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p>在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同</p>
+</blockquote>
+<blockquote>
+<p>幂等 ：编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同</p>
+</blockquote>
+<h3 id="常用的HTTP-METHOD幂等性"><a href="#常用的HTTP-METHOD幂等性" class="headerlink" title="常用的HTTP METHOD幂等性"></a>常用的HTTP METHOD幂等性</h3><ul>
+<li>GET ：幂等</li>
+<li>POST ：非幂等</li>
+<li>PUT ：幂等</li>
+<li>PATCH ：非幂等</li>
+<li>DELETE ：幂等</li>
+</ul>
+<h3 id="保证幂等性的一些方法"><a href="#保证幂等性的一些方法" class="headerlink" title="保证幂等性的一些方法"></a>保证幂等性的一些方法</h3><h4 id="新增数据的幂等性"><a href="#新增数据的幂等性" class="headerlink" title="新增数据的幂等性"></a>新增数据的幂等性</h4><ul>
+<li>数据库中设置唯一键，如用户表中的username</li>
+<li>有特殊情况单一字段无法控制数据的唯一性，可以建立防重表，新增数据之前先往防重表中插入数据，成功时再新增数据</li>
+<li>Redis锁，与防重表异曲同工，使用 setNx命令 在缓存中存入唯一key，设置成功进行业务操作。</li>
+</ul>
+<h4 id="修改数据的幂等性"><a href="#修改数据的幂等性" class="headerlink" title="修改数据的幂等性"></a>修改数据的幂等性</h4><ul>
+<li>乐观锁，在表中加入版本号字段，每次修改之前先查询版本号并在修改语句中加入版本号的条件</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update status <span class="operator">=</span> status <span class="operator">+</span> <span class="number">1</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="string">&#x27;xxx&#x27;</span> <span class="keyword">and</span> version <span class="operator">=</span> version</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<ul>
+<li>悲观锁，使用数据库select for update 锁住数据让其他线程无法修改</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="string">&#x27;xxx&#x27;</span> <span class="keyword">for</span> update</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<blockquote>
+<p>需要注意的是，查询条件需要为主键或者索引列，否则会导致表锁</p>
+</blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/10/hello-world/" data-id="ckrzyocfu00034gus9ke4718z" data-title="Hello World" class="article-share-link">分享</a>
+      <a data-url="https://amsssss.github.io/2021/08/06/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" data-id="ckrzyocfw00064gush6rb5xzc" data-title="接口幂等性" class="article-share-link">分享</a>
       
       
       
@@ -98,15 +116,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/05/10/learn-template/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">前一篇</strong>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
+    <a href="/2021/07/28/ArcGis-Learn/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">ArcGis Learn</div>
+    </a>
   
 </nav>
 

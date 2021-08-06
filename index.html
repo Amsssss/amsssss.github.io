@@ -51,6 +51,123 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-接口幂等性" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/06/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="article-date">
+  <time class="dt-published" datetime="2021-08-06T01:17:46.000Z" itemprop="datePublished">2021-08-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/06/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/">接口幂等性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同</p>
+</blockquote>
+<blockquote>
+<p>幂等 ：编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同</p>
+</blockquote>
+<h3 id="常用的HTTP-METHOD幂等性"><a href="#常用的HTTP-METHOD幂等性" class="headerlink" title="常用的HTTP METHOD幂等性"></a>常用的HTTP METHOD幂等性</h3><ul>
+<li>GET ：幂等</li>
+<li>POST ：非幂等</li>
+<li>PUT ：幂等</li>
+<li>PATCH ：非幂等</li>
+<li>DELETE ：幂等</li>
+</ul>
+<h3 id="保证幂等性的一些方法"><a href="#保证幂等性的一些方法" class="headerlink" title="保证幂等性的一些方法"></a>保证幂等性的一些方法</h3><h4 id="新增数据的幂等性"><a href="#新增数据的幂等性" class="headerlink" title="新增数据的幂等性"></a>新增数据的幂等性</h4><ul>
+<li>数据库中设置唯一键，如用户表中的username</li>
+<li>有特殊情况单一字段无法控制数据的唯一性，可以建立防重表，新增数据之前先往防重表中插入数据，成功时再新增数据</li>
+<li>Redis锁，与防重表异曲同工，使用 setNx命令 在缓存中存入唯一key，设置成功进行业务操作。</li>
+</ul>
+<h4 id="修改数据的幂等性"><a href="#修改数据的幂等性" class="headerlink" title="修改数据的幂等性"></a>修改数据的幂等性</h4><ul>
+<li>乐观锁，在表中加入版本号字段，每次修改之前先查询版本号并在修改语句中加入版本号的条件</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update status <span class="operator">=</span> status <span class="operator">+</span> <span class="number">1</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="string">&#x27;xxx&#x27;</span> <span class="keyword">and</span> version <span class="operator">=</span> version</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>悲观锁，使用数据库select for update 锁住数据让其他线程无法修改</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="string">&#x27;xxx&#x27;</span> <span class="keyword">for</span> update</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要注意的是，查询条件需要为主键或者索引列，否则会导致表锁</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://amsssss.github.io/2021/08/06/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" data-id="ckrzyocfw00064gush6rb5xzc" data-title="接口幂等性" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-ArcGis-Learn" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/28/ArcGis-Learn/" class="article-date">
+  <time class="dt-published" datetime="2021-07-28T01:47:01.000Z" itemprop="datePublished">2021-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/28/ArcGis-Learn/">ArcGis Learn</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="数据的类型"><a href="#数据的类型" class="headerlink" title="数据的类型"></a>数据的类型</h3><ul>
+<li><p>矢量数据：xxx.shp</p>
+<p>shp：shape形状文件</p>
+<p>prj：projection投影文件</p>
+<p>dbf：data base file 数据库文件</p>
+<p>shx：shape index 索引文件</p>
+</li>
+<li><p>栅格数据：xxx.tif</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://amsssss.github.io/2021/07/28/ArcGis-Learn/" data-id="ckrzyocfo00004gus0s2cegj4" data-title="ArcGis Learn" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-JUC-learn" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/27/JUC-learn/" class="article-date">
@@ -73,12 +190,35 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id=""><a href="#" class="headerlink" title=""></a></h2><p><img src="/png/java-thread-x-juc-overview-lock.png" alt="Lock框架和Tools类"></p>
+        <h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><p>生产者消费者问题（英语：Producer-consumer problem），也称有限缓冲问题（英语：Bounded-buffer problem），是一个多线程<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%90%8C%E6%AD%A5">同步</a>问题的经典案例。该问题描述了两个共享固定大小<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%93%E5%86%B2%E5%8C%BA/4830555">缓冲区</a>的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BA%BF%E7%A8%8B/103101">线程</a>——即所谓的“生产者”和“消费者”——在实际运行时会发生的问题。生产者的主要作用是生成一定量的数据放到缓冲区中，然后重复此过程。与此同时，消费者也在缓冲区消耗这些数据。该问题的关键就是要保证生产者不会在缓冲区满时加入数据，消费者也不会在缓冲区中空时<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%B6%88%E8%80%97/6755144">消耗</a>数据。</p>
+<h3 id="JAVA的五种实现"><a href="#JAVA的五种实现" class="headerlink" title="JAVA的五种实现"></a>JAVA的五种实现</h3><h4 id="wait-notify"><a href="#wait-notify" class="headerlink" title="wait / notify"></a>wait / notify</h4><ul>
+<li>锁池：假设线程A已经拥有了某个对象(注意:不是类)的锁，而其它的线程想要调用这个对象的某个synchronized方法(或者synchronized块)，由于这些线程在进入对象的synchronized方法之前必须先获得该对象的锁的拥有权，但是该对象的锁目前正被线程A拥有，所以这些线程就进入了该对象的锁池中。</li>
+<li>等待池：假设一个线程A调用了某个对象的wait()方法，线程A就会释放该对象的锁后，进入到了该对象的等待池中</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Resource</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> max = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> store = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">produce</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (store &gt;= max) &#123; <span class="comment">//使用while循环判断，每当wait释放锁被唤醒时需要再此判断条件是否满足是否需要继续等待</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot;等待&quot;</span>);</span><br><span class="line">                wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        store++;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot;生产&quot;</span>);</span><br><span class="line">        notifyAll();</span><br><span class="line">        System.out.println(<span class="string">&quot;库存：&quot;</span> + store);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">consume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (store &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot;等待&quot;</span>);</span><br><span class="line">                wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        store--;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot;消费&quot;</span>);</span><br><span class="line">        notifyAll();</span><br><span class="line">        System.out.println(<span class="string">&quot;库存：&quot;</span> + store);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h4 id="await-signal"><a href="#await-signal" class="headerlink" title="await / signal"></a>await / signal</h4><p>JUC中的Lock Condition 组合实现，根据Condition可以实现生成者消费者两条通道，生产后通知消费者，消费后通知生产者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public static class Resource1 &#123;</span><br><span class="line">    int max = 5;</span><br><span class="line">    int store = 0;</span><br><span class="line">    Lock lock = new ReentrantLock();</span><br><span class="line">    Condition pro = lock.newCondition();</span><br><span class="line">    Condition con = lock.newCondition();</span><br><span class="line"></span><br><span class="line">    public void produce() &#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            while (store &gt;= max) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + &quot;等待&quot;);</span><br><span class="line">                pro.await();</span><br><span class="line">            &#125;</span><br><span class="line">            store++;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + &quot;生产&quot;);</span><br><span class="line">            con.signalAll();</span><br><span class="line">            System.out.println(&quot;库存：&quot; + store);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void consume() &#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            while (store &lt;= 0) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + &quot;等待&quot;);</span><br><span class="line">                con.await();</span><br><span class="line">            &#125;</span><br><span class="line">            store--;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + &quot;消费&quot;);</span><br><span class="line">            pro.signalAll();</span><br><span class="line">            System.out.println(&quot;库存：&quot; + store);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Blocking-Queue-阻塞队列"><a href="#Blocking-Queue-阻塞队列" class="headerlink" title="Blocking Queue 阻塞队列"></a>Blocking Queue 阻塞队列</h4><h4 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h4><h4 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h4><h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h3 id="三大方法"><a href="#三大方法" class="headerlink" title="三大方法"></a>三大方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单个线程的线程池</span></span><br><span class="line">Executors.newSingleThreadExecutor(); </span><br><span class="line"><span class="comment">//固定线程的线程池</span></span><br><span class="line">Executors.newFixedThreadPool(<span class="number">5</span>);</span><br><span class="line"><span class="comment">//可伸缩的线程池</span></span><br><span class="line">Executors.newCachedThreadPool();</span><br></pre></td></tr></table></figure>
+
+<h3 id="七种参数"><a href="#七种参数" class="headerlink" title="七种参数"></a>七种参数</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize, //核心线程大小</span></span></span><br><span class="line"><span class="params"><span class="function">                          <span class="keyword">int</span> maximumPoolSize, //最大线程大小</span></span></span><br><span class="line"><span class="params"><span class="function">                          <span class="keyword">long</span> keepAliveTime, //核心线程以外的线程存活时间</span></span></span><br><span class="line"><span class="params"><span class="function">                          TimeUnit unit, //时间单位</span></span></span><br><span class="line"><span class="params"><span class="function">                          BlockingQueue&lt;Runnable&gt; workQueue, //阻塞队列</span></span></span><br><span class="line"><span class="params"><span class="function">                          ThreadFactory threadFactory, //线程工厂</span></span></span><br><span class="line"><span class="params"><span class="function">                          RejectedExecutionHandler handler //拒绝策略</span></span></span><br><span class="line"><span class="params"><span class="function">                         )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (corePoolSize &lt; <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt;= <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt; corePoolSize ||</span><br><span class="line">        keepAliveTime &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">if</span> (workQueue == <span class="keyword">null</span> || threadFactory == <span class="keyword">null</span> || handler == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">this</span>.corePoolSize = corePoolSize;</span><br><span class="line">    <span class="keyword">this</span>.maximumPoolSize = maximumPoolSize;</span><br><span class="line">    <span class="keyword">this</span>.workQueue = workQueue;</span><br><span class="line">    <span class="keyword">this</span>.keepAliveTime = unit.toNanos(keepAliveTime);</span><br><span class="line">    <span class="keyword">this</span>.threadFactory = threadFactory;</span><br><span class="line">    <span class="keyword">this</span>.handler = handler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四种拒绝策略"><a href="#四种拒绝策略" class="headerlink" title="四种拒绝策略"></a>四种拒绝策略</h3><ul>
+<li><p>```java<br>AbortPolicy //抛出异常</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  CallerRunsPolicy //从哪来去哪跑 </span><br></pre></td></tr></table></figure></li>
+<li><p>```java<br>DiscardPolicy //丢弃任务，不会抛出异常</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  DiscardOldestPolicy //丢弃最早的未处理请求，不会抛出异常</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="线程池最大设置tips"><a href="#线程池最大设置tips" class="headerlink" title="线程池最大设置tips"></a>线程池最大设置tips</h3><ul>
+<li>CPU密集型：使用服务器CPU核心数量作为最大线程数</li>
+<li>IO密集型：大于CPU核心数量既可，可以为CPU核心数两倍。</li>
+</ul>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="公平锁与非公平锁"><a href="#公平锁与非公平锁" class="headerlink" title="公平锁与非公平锁"></a>公平锁与非公平锁</h3><h3 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h3><h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><h3 id="可重入锁"><a href="#可重入锁" class="headerlink" title="可重入锁"></a>可重入锁</h3><h3 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h3><h3 id="乐观锁与悲观锁"><a href="#乐观锁与悲观锁" class="headerlink" title="乐观锁与悲观锁"></a>乐观锁与悲观锁</h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/07/27/JUC-learn/" data-id="ckrltfkgu000070us9ptf7rm4" data-title="JUC learn" class="article-share-link">分享</a>
+      <a data-url="https://amsssss.github.io/2021/07/27/JUC-learn/" data-id="ckrzyocfs00014gus9d6y92zj" data-title="JUC learn" class="article-share-link">分享</a>
       
       
       
@@ -144,7 +284,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/06/04/git-learn/" data-id="ckrltfkgz000170use5rh957y" data-title="git_learn" class="article-share-link">分享</a>
+      <a data-url="https://amsssss.github.io/2021/06/04/git-learn/" data-id="ckrzyocft00024gus3wz78lwa" data-title="git_learn" class="article-share-link">分享</a>
       
       
       
@@ -190,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/14/ssh%E4%BF%9D%E5%AD%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%86%E7%A0%81%E5%85%8D%E7%99%BB%E5%BD%95/" data-id="ckrltfkh4000570us3shkhzk3" data-title="ssh保存服务器密码免登录" class="article-share-link">分享</a>
+      <a data-url="https://amsssss.github.io/2021/05/14/ssh%E4%BF%9D%E5%AD%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%86%E7%A0%81%E5%85%8D%E7%99%BB%E5%BD%95/" data-id="ckrzyocfv00054gusakgn115g" data-title="ssh保存服务器密码免登录" class="article-share-link">分享</a>
       
       
       
@@ -228,7 +368,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/10/my-first-post/" data-id="ckrltfkh3000470usemtt2l24" data-title="my first post" class="article-share-link">分享</a>
+      <a data-url="https://amsssss.github.io/2021/05/10/my-first-post/" data-id="ckrzyocfx00074gusb2o24jbd" data-title="my first post" class="article-share-link">分享</a>
       
       
       
@@ -264,7 +404,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/10/learn-template/" data-id="ckrltfkh2000370us0uwm3qvw" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://amsssss.github.io/2021/05/10/learn-template/" data-id="ckrzyocfv00044gusbpifce5p" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -315,7 +455,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://amsssss.github.io/2021/05/10/hello-world/" data-id="ckrltfkh0000270usa1b8616u" data-title="Hello World" class="article-share-link">分享</a>
+      <a data-url="https://amsssss.github.io/2021/05/10/hello-world/" data-id="ckrzyocfu00034gus9ke4718z" data-title="Hello World" class="article-share-link">分享</a>
       
       
       
@@ -341,6 +481,14 @@
       <ul>
         
           <li>
+            <a href="/2021/08/06/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/">接口幂等性</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/ArcGis-Learn/">ArcGis Learn</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/27/JUC-learn/">JUC learn</a>
           </li>
         
@@ -350,14 +498,6 @@
         
           <li>
             <a href="/2021/05/14/ssh%E4%BF%9D%E5%AD%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%86%E7%A0%81%E5%85%8D%E7%99%BB%E5%BD%95/">ssh保存服务器密码免登录</a>
-          </li>
-        
-          <li>
-            <a href="/2021/05/10/my-first-post/">my first post</a>
-          </li>
-        
-          <li>
-            <a href="/2021/05/10/learn-template/">(no title)</a>
           </li>
         
       </ul>
@@ -372,7 +512,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a></li></ul>
     </div>
   </div>
 
